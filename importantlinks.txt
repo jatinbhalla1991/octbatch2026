@@ -7,3 +7,4 @@ aws account- https://signin.aws.amazon.com/
 docker desktop- https://docs.docker.com/desktop/setup/install/windows-install/
 visual studio code- https://code.visualstudio.com/download?_exp_download=fb315fc982
 aws cli- https://aws.amazon.com/cli/
+dockerhub account- https://login.docker.com/
