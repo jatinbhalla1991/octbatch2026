@@ -1,0 +1,16 @@
+9th oct
+git  and GitHub
+
+assignment1
+
+task1: go through git branching strategies
+
+https://dev.to/juniourrau/6-types-of-git-branching-strategy-g54
+
+task2: go through git cheat sheet and its commands
+
+https://education.github.com/git-cheat-sheet-education.pdf
+
+task3: find out the difference between public and private repo
+
+task4: create a private repo and try to clone, push, pull using different methods of authentication like http , ssh, GitHub cli
