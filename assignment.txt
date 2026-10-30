@@ -119,3 +119,10 @@ Run for production:
 - Execution outputs for both scenarios.
 - Syntax-check output.
 - Explanation of the conditional logic and idempotency results.
+
+30th oct 
+docker assignment:
+task1: create a custom docker image using apache webservices and modify the image with your custom code 
+       then push the custom image on ECR(AWS)
+
+Task2: try to pull the any database docker image and after running try to connect with it
