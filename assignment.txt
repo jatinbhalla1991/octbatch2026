@@ -126,3 +126,8 @@ task1: create a custom docker image using apache webservices and modify the imag
        then push the custom image on ECR(AWS)
 
 Task2: try to pull the any database docker image and after running try to connect with it
+ 
+ 2nd nov
+ docker: 
+ task1: write a sample java code for your application and deploy inside docker image
+ (single stage) and try different docker commands
