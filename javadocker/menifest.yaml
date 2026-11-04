@@ -1,0 +1,145 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: java-app
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-blue
+  namespace: java-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: java-app
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: java-app
+        color: blue
+        version: v1
+    spec:
+      containers:
+      - name: java-app-blue
+        image: jatinbhalla1991/javasample:v1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: APP_COLOR
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['color']
+        - name: APP_TAG
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['version']
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 20
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-green
+  namespace: java-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: java-app
+      color: green
+  template:
+    metadata:
+      labels:
+        app: java-app
+        color: green
+        version: v2
+    spec:
+      containers:
+      - name: java-app-green
+        image: jatinbhalla1991/javasample:v2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: APP_COLOR
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['color']
+        - name: APP_TAG
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['version']
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 20
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-loadbalancer
+  namespace: java-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: java-app
+    color: blue
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-preview
+  namespace: java-app
+spec:
+  type: ClusterIP
+  selector:
+    app: java-app
+    color: green
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080

@@ -1,0 +1,14 @@
+# Single-stage Docker build
+FROM maven:3.9.9-eclipse-temurin-17
+
+WORKDIR /app
+
+COPY pom.xml ./
+COPY src ./src
+
+# Build the JAR file
+RUN mvn -B -DskipTests clean package
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app/target/app.jar"]

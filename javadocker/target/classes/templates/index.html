@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Docker Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #1f3a5f;
+        }
+        .meta {
+            margin-top: 12px;
+            font-size: 15px;
+            color: #2b4a6d;
+        }
+        .badge {
+            display: inline-block;
+            margin: 6px 6px 0;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #e8f1ff;
+            border: 1px solid #bfd4ff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 th:text="${message}">Welcome</h1>
+        <p>This is a sample Java web application running inside Docker.</p>
+        <div class="meta">
+            <span class="badge">Color: <span th:text="${deploymentColor}">unknown</span></span>
+            <span class="badge">Tag: <span th:text="${deploymentTag}">n/a</span></span>
+        </div>
+    </div>
+</body>
+</html>

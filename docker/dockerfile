@@ -1,2 +1,2 @@
-FROM ubuntu:latest
-ENTRYPOINT ["echo", "Hello, World!"]
+FROM nginx:latest
+COPY ./index.html /usr/share/nginx/html/index.html

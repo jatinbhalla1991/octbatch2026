@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: jatinbhalla1991/webapp  
+    ports:
+      - "80:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+  
+  backend:
+     image: redis
+     ports:
+       - "6379:6379"
+  
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    
