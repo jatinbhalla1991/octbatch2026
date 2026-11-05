@@ -131,3 +131,115 @@ Task2: try to pull the any database docker image and after running try to connec
  docker: 
  task1: write a sample java code for your application and deploy inside docker image
  (single stage) and try different docker commands
+ 
+ # Advanced Docker Assignment: Build and Deploy a Multi-Tier Application
+
+**Scenario:**
+
+You are working as a DevOps Engineer in an organization that wants to deploy a multi-tier application using Docker. Your responsibility is to containerize the application, configure networking and persistent storage, optimize Docker images, and manage all services using Docker Compose.
+
+## Task 1: Create Application Dockerfiles
+
+1. Create a Java Spring Boot application with a Maven build.
+2. Create a Dockerfile for the backend application.
+3. Create a separate Dockerfile for the frontend using Nginx.
+4. Create a Dockerfile for the database if using a custom database configuration.
+5. Ensure each Dockerfile follows appropriate best practices.
+6. Use CMD and ENTRYPOINT wherever appropriate.
+
+## Task 2: Implement Multi-Stage Docker Builds
+
+1. Modify the backend Dockerfile to implement a multi-stage build.
+2. Use Maven and JDK in the builder stage to generate the JAR file.
+3. Use a lightweight Java JRE image in the runtime stage.
+4. Ensure Maven and unnecessary build dependencies are not included in the final image.
+5. Create another single-stage Dockerfile for the same application.
+6. Build both images and compare their sizes.
+
+**Challenge:** Optimize the final image size without affecting application functionality.
+
+## Task 3: Configure Docker Networking
+
+1. Create at least two custom bridge networks.
+2. Configure frontend and backend communication through the appropriate network.
+3. Configure a separate database network.
+4. Ensure the frontend cannot directly communicate with the database.
+5. Use container names or Docker service names instead of hardcoded IP addresses.
+6. Verify connectivity using Docker networking commands.
+
+**Challenge:** Disconnect a container from its network and troubleshoot the communication issue.
+
+## Task 4: Configure Docker Volumes and Persistent Storage
+
+1. Create a named volume for the MySQL database.
+2. Mount the named volume to the appropriate database directory.
+3. Configure a bind mount for application configuration files.
+4. Insert sample records into the database.
+5. Stop and remove the database container.
+6. Recreate the database container and verify that the records are still available.
+7. Take a database backup and demonstrate the restore process.
+
+**Challenge:** Demonstrate data recovery after deleting and recreating a container.
+
+## Task 5: Implement Docker Compose
+
+1. Create a `docker-compose.yml` file to manage the frontend, backend, and database.
+2. Configure each service to use its respective Dockerfile.
+3. Configure custom networks.
+4. Configure named volumes and bind mounts.
+5. Use environment variables through a `.env` file.
+6. Configure service dependencies using `depends_on`.
+7. Implement health checks for the database and backend.
+8. Configure restart policies.
+9. Configure port mappings wherever required.
+
+**Challenge:** Start and stop the complete application using Docker Compose commands without manually managing individual containers.
+
+## Task 6: Image Management and Registry Integration
+
+1. Build Docker images for frontend and backend.
+2. Tag images using appropriate version numbers.
+3. Push images to Docker Hub or Nexus Repository.
+4. Pull the images from the registry on another machine.
+5. Run the application using the pulled images.
+
+**Challenge:** Implement version-based image tagging such as `v1`, `v2`, and `latest`.
+
+## Task 7: Container Security and Optimization
+
+1. Run application containers using non-root users wherever possible.
+2. Create a `.dockerignore` file.
+3. Avoid hardcoding credentials in Dockerfiles.
+4. Use environment variables or Docker secrets for sensitive configuration.
+5. Configure CPU and memory limits.
+6. Scan Docker images for vulnerabilities using an image scanning tool.
+7. Analyze and optimize image sizes.
+
+## Task 8: Troubleshooting and Production Scenarios
+
+Demonstrate the following scenarios:
+
+1. Backend cannot connect to the database. Identify and resolve the issue.
+2. Database container is deleted. Recover the application data.
+3. Backend container crashes. Configure and verify automatic restart.
+4. Frontend cannot communicate with the backend. Troubleshoot networking.
+5. A new application version is released. Deploy the new image without rebuilding the database.
+6. Demonstrate rollback to the previous application version if the new version fails.
+
+## Submission Requirements
+
+Students must submit:
+
+1. All Dockerfiles.
+2. `docker-compose.yml`.
+3. `.env.example` without actual credentials.
+4. Application source code.
+5. Docker network and volume configuration.
+6. Image build and registry commands.
+7. Screenshots of successful deployment and testing.
+8. Architecture diagram showing containers, networks, and volumes.
+9. Documentation of troubleshooting scenarios and their solutions.
+
+**Expected Outcome:**
+
+At the end of this assignment, you should be able to design, build, deploy, manage, troubleshoot, and optimize a multi-tier application using advanced Docker concepts.
