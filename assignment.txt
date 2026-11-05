@@ -131,7 +131,7 @@ Task2: try to pull the any database docker image and after running try to connec
  docker: 
  task1: write a sample java code for your application and deploy inside docker image
  (single stage) and try different docker commands
- 
+ ------------------------------------------------------------------------------
  # Advanced Docker Assignment: Build and Deploy a Multi-Tier Application
 
 **Scenario:**
