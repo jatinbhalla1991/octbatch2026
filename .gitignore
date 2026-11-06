@@ -4,3 +4,4 @@
 .terraform.lock.hcl
 *.tfvars.json
 .terraform/terraform.tfstate.lock.info  
+*.terraform.tfstate.lock.info
