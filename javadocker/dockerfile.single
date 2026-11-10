@@ -11,4 +11,4 @@ RUN mvn -B -DskipTests clean package
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app/target/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/target/javadocker-sample-1.0.0.jar"]
