@@ -243,3 +243,152 @@ Students must submit:
 **Expected Outcome:**
 
 At the end of this assignment, you should be able to design, build, deploy, manage, troubleshoot, and optimize a multi-tier application using advanced Docker concepts.
+-------------------------------------
+# Kubernetes Advanced Assignment: Autoscaling, Node Management & Blue-Green Deployment
+
+## Objective
+
+Create a Kubernetes cluster and implement different scaling strategies at both Pod and Node levels. Configure manual and automatic scaling, perform node scale-up and scale-down without application downtime, and implement Blue-Green deployment.
+
+### Task 1: Create a Kubernetes Cluster
+
+1. Create a Kubernetes cluster using AKS or EKS.
+2. Configure a minimum of 2 worker nodes.
+3. Deploy a sample application (Nginx, Java, Python, or Node.js).
+4. Expose the application using a Kubernetes Service.
+5. Verify that the application is accessible.
+6. Deploy multiple replicas and verify that workloads are distributed across worker nodes.
+
+**Expected outcome:** A working Kubernetes cluster with a running application accessible through a Service.
+
+### Task 2: Implement Pod Autoscaling (HPA and VPA)
+
+Implement both Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA).
+
+**Part A: HPA – Horizontal Pod Autoscaler**
+
+1. Configure CPU and memory requests and limits for your application.
+2. Install and configure Metrics Server.
+3. Configure HPA based on CPU utilization (e.g., 50% or 60%).
+4. Configure minimum and maximum replica counts.
+5. Generate application load using a load-testing tool.
+6. Observe how Kubernetes automatically increases the number of Pods.
+7. Stop the load and observe how Kubernetes scales down the Pods.
+
+**Part B: VPA – Vertical Pod Autoscaler**
+
+1. Install and configure VPA.
+2. Configure VPA for your application.
+3. Test VPA in recommendation mode.
+4. Check the CPU and memory recommendations.
+5. Configure VPA in Auto or controlled update mode.
+6. Observe how the resource requests are adjusted.
+7. Understand what happens to existing Pods when VPA applies resource changes.
+
+**Part C: Manual vs Automatic Scaling**
+
+Perform both operations:
+
+- Manually increase the replicas using `kubectl scale`.
+- Manually decrease the replicas.
+- Configure HPA and observe automatic scale-up and scale-down.
+- Compare manual scaling with automatic scaling.
+
+**Expected outcome:** Demonstrate how HPA and VPA work, explain the difference between horizontal and vertical scaling, and provide screenshots of scaling activities.
+
+### Task 3: Kubernetes Node Scale-Up and Scale-Down Without Downtime
+
+In this task, you must scale the worker nodes while ensuring that your application remains accessible throughout the process.
+
+**Part A: Manual Node Scaling**
+
+1. Start with 2 worker nodes.
+2. Increase the worker node count to 3 or 4.
+3. Verify that new nodes join the cluster.
+4. Check how Kubernetes schedules existing and newly created Pods.
+5. Scale down the worker nodes.
+6. Safely drain the node before removing it.
+7. Verify that the application continues running during the operation.
+
+**Part B: Automatic Node Scaling**
+
+1. Configure Cluster Autoscaler.
+2. Define minimum and maximum node counts.
+3. Deploy an application with sufficient CPU and memory requests.
+4. Generate additional workloads that cannot fit on the existing nodes.
+5. Verify that Cluster Autoscaler automatically adds worker nodes.
+6. Reduce the workload and observe node scale-down.
+7. Verify that workloads are safely rescheduled before nodes are removed.
+
+**Part C: Zero-Downtime Requirement**
+
+Ensure that application downtime does not occur during node scale-up or scale-down.
+
+Implement the following:
+
+- Configure at least 3 application replicas.
+- Configure Pod Disruption Budget (PDB).
+- Configure readiness and liveness probes.
+- Use node draining before node removal.
+- Implement rolling updates where required.
+- Verify application availability throughout the process.
+
+**Expected outcome:** Demonstrate manual and automatic node scaling, safe node draining, workload rescheduling, and application availability during infrastructure changes.
+
+### Task 4: Implement Blue-Green Deployment
+
+Implement Blue-Green deployment for your application.
+
+**Scenario:**
+
+Your company currently runs Application Version 1 (Blue). A new version, Version 2 (Green), needs to be deployed without interrupting existing users.
+
+**Implementation steps:**
+
+1. Deploy Application V1 and name it Blue.
+2. Expose Blue using a Kubernetes Service.
+3. Verify that users can access Version 1.
+4. Deploy Application V2 separately and name it Green.
+5. Create separate Kubernetes Deployments and labels for both versions.
+6. Test Green independently before switching traffic.
+7. Change the Kubernetes Service selector from Blue to Green.
+8. Verify that incoming traffic now reaches Version 2.
+9. Monitor the new version for errors and application health.
+10. If Version 2 fails, implement rollback by switching traffic back to Blue.
+11. Verify that rollback works without requiring a complete redeployment.
+
+**Additional challenge:**
+
+- Implement Blue-Green deployment using Kubernetes manifests.
+- Maintain separate replica counts for both versions.
+- Verify traffic routing before and after the switch.
+- Demonstrate rollback using a single Service selector change.
+
+**Expected outcome:** Successfully switch application traffic from Version 1 to Version 2 and demonstrate rollback without application downtime.
+
+---
+
+## Submission Requirements
+
+Submit the following:
+
+1. Kubernetes cluster architecture diagram.
+2. YAML files for Deployments, Services, HPA, VPA, PDB, and probes.
+3. Screenshots of manual and automatic Pod scaling.
+4. Screenshots of VPA recommendations and resource updates.
+5. Screenshots showing node scale-up and scale-down.
+6. Evidence of successful node draining and workload rescheduling.
+7. Blue-Green deployment manifests.
+8. Screenshots showing traffic switching and rollback.
+9. A short document explaining the challenges faced and how they were resolved.
+
+## Important Conditions
+
+- Do not perform only theoretical implementation.
+- All scaling operations must be demonstrated practically.
+- Application availability must be verified during node maintenance.
+- Do not delete a worker node directly without safely draining it.
+- Demonstrate both scale-up and scale-down.
+- Demonstrate successful rollback in Blue-Green deployment.
+
+**Final Goal:** Build a Kubernetes environment that can handle changing workloads, automatically scale infrastructure, maintain application availability, and support safe application releases.
