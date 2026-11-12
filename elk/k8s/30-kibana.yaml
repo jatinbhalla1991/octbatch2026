@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:8.15.0
+        env:
+        - name: ELASTICSEARCH_HOSTS
+          value: http://elasticsearch:9200
+        - name: xpack.security.enabled
+          value: "false"
+        ports:
+        - containerPort: 5601
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: logging
+spec:
+  # LoadBalancer mirrors docker/menifest.yaml's sample service for easy access.
+  # Switch to ClusterIP + `kubectl port-forward` if you don't want a public IP.
+  type: LoadBalancer
+  selector:
+    app: kibana
+  ports:
+  - port: 5601
+    targetPort: 5601

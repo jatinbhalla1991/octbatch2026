@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipeline
+  namespace: logging
+data:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
+
+    filter {
+      # the sample app's "sample" container is nginx; parse its access log into structured fields
+      if [kubernetes][namespace] == "sample" and [kubernetes][container][name] == "sample" {
+        grok {
+          match => { "message" => "%{COMBINEDAPACHELOG}" }
+        }
+        date {
+          match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+          remove_field => ["timestamp"]
+        }
+      }
+    }
+
+    output {
+      # Metricbeat documents (node/pod/container/event metrics, 50-metricbeat.yaml)
+      # go to their own index, separate from log documents. "[@metadata][beat]"
+      # is set automatically by the Logstash beats input based on which Beat
+      # shipped the event - no custom field needed on the Metricbeat side.
+      if [@metadata][beat] == "metricbeat" {
+        elasticsearch {
+          hosts => ["http://elasticsearch:9200"]
+          index => "k8s-metrics-%{+YYYY.MM.dd}"
+        }
+      # Node-level system logs (kubelet/containerd via journald) go to their
+      # own index, separate from per-pod container logs.
+      } else if [log_type] == "node-system" {
+        elasticsearch {
+          hosts => ["http://elasticsearch:9200"]
+          index => "k8s-system-logs-%{+YYYY.MM.dd}"
+        }
+      } else {
+        elasticsearch {
+          hosts => ["http://elasticsearch:9200"]
+          index => "k8s-logs-%{+YYYY.MM.dd}"
+        }
+      }
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: logging
+spec:
+  replicas: 1
+  # Recreate avoids the same class of problem as Elasticsearch's PVC deadlock
+  # (see 10-elasticsearch.yaml): on a small/tightly-packed cluster, the default
+  # RollingUpdate's temporary surge pod can get stuck "Insufficient cpu" since
+  # there's no spare capacity for old+new to run briefly at once.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:8.15.0
+        env:
+        - name: xpack.monitoring.enabled
+          value: "false"
+        ports:
+        - containerPort: 5044
+        resources:
+          # cpu request kept modest so a 2-node/2-vCPU-per-node cluster still
+          # has headroom to schedule the Filebeat DaemonSet pod on this node.
+          requests:
+            memory: "512Mi"
+            cpu: "150m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: pipeline
+          mountPath: /usr/share/logstash/pipeline
+          readOnly: true
+      volumes:
+      - name: pipeline
+        configMap:
+          name: logstash-pipeline
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: logging
+spec:
+  selector:
+    app: logstash
+  ports:
+  - port: 5044
+    targetPort: 5044
