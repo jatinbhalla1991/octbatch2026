@@ -392,3 +392,651 @@ Submit the following:
 - Demonstrate successful rollback in Blue-Green deployment.
 
 **Final Goal:** Build a Kubernetes environment that can handle changing workloads, automatically scale infrastructure, maintain application availability, and support safe application releases.
+
+assignment:
+
+task1: check in your system if any temprory file exists which has size greater than 50mb and older than 90 day. list down all those files in the output
+
+task2: create a python script for reading the csv file and convert it to desired formats 
+
+task3: create a script for logging the activties performed on your system in last 2 hours
+
+
+
+assignment terraform:
+
+write the terraform modules for below resource types
+
+1. 2 ubuntu virtual machine (jenkins)
+2. acr (azure container registry) (docker)
+3. kubernetes cluster (kubernetes)
+
+-------------------------------------------------------------
+############# Jenkins 23 oct #########
+
+question1 : 
+
+Create Folder1 and create two files inside it. Then create Folder2 and copy both files from Folder1 to Folder2. Finally, log in to your EC2 instance and verify that both folders exist and contain the respective files.
+
+question2:
+
+Create a private repository on GitHub and store the Jenkinsfile in it. Then, create a Jenkins Pipeline job and configure it to retrieve and execute the Jenkinsfile directly from the GitHub repository. also create a web hook so if any changes are made your pipeline should trigger
+
+purpose: The objective of this activity is to understand how to securely store and manage secrets and credentials in Jenkins and GitHub without hardcoding sensitive information in the pipeline.
+
+question3:
+
+Create a Jenkins Pipeline that executes Terraform code based on the action selected by the user.
+The pipeline should accept user input through a parameter and perform the corresponding action:
+Plan: If the user selects plan, the pipeline should execute terraform init and terraform plan to preview the infrastructure changes without creating or deleting resources.
+Apply: If the user selects apply, the pipeline should execute the Terraform plan and create or update the required infrastructure resources.
+Destroy: If the user selects destroy, the pipeline should delete the infrastructure resources managed by Terraform.
+
+Purpose of the Activity:
+Learn how to create a parameterized Jenkins Pipeline that accepts user input.
+Understand how to use conditional logic to execute different stages based on the selected action.
+Learn how to integrate Jenkins with Terraform to automate infrastructure provisioning and deletion.
+Understand how to securely store and manage secrets, such as cloud credentials and Terraform backend credentials, using Jenkins Credentials rather than hardcoding them in the pipeline.
+Implement appropriate safeguards, such as manual approval before applying or destroying infrastructure.
+
+
+question4: 
+
+try to setup a agent/node for jenkins and then use that node to run the pipelines
+----------------------------------------------------------------------------------
+############# 29 oct########## 
+docker
+
+# Advanced Docker Assignment: Build and Deploy a Multi-Tier Application
+
+**Scenario:**
+
+You are working as a DevOps Engineer in an organization that wants to deploy a multi-tier application using Docker. Your responsibility is to containerize the application, configure networking and persistent storage, optimize Docker images, and manage all services using Docker Compose.
+
+## Task 1: Create Application Dockerfiles
+
+1. Create a Java Spring Boot application with a Maven build.
+2. Create a Dockerfile for the backend application.
+3. Create a separate Dockerfile for the frontend using Nginx.
+4. Create a Dockerfile for the database if using a custom database configuration.
+5. Ensure each Dockerfile follows appropriate best practices.
+6. Use CMD and ENTRYPOINT wherever appropriate.
+
+## Task 2: Implement Multi-Stage Docker Builds
+
+1. Modify the backend Dockerfile to implement a multi-stage build.
+2. Use Maven and JDK in the builder stage to generate the JAR file.
+3. Use a lightweight Java JRE image in the runtime stage.
+4. Ensure Maven and unnecessary build dependencies are not included in the final image.
+5. Create another single-stage Dockerfile for the same application.
+6. Build both images and compare their sizes.
+
+**Challenge:** Optimize the final image size without affecting application functionality.
+
+## Task 3: Configure Docker Networking
+
+1. Create at least two custom bridge networks.
+2. Configure frontend and backend communication through the appropriate network.
+3. Configure a separate database network.
+4. Ensure the frontend cannot directly communicate with the database.
+5. Use container names or Docker service names instead of hardcoded IP addresses.
+6. Verify connectivity using Docker networking commands.
+
+**Challenge:** Disconnect a container from its network and troubleshoot the communication issue.
+
+## Task 4: Configure Docker Volumes and Persistent Storage
+
+1. Create a named volume for the MySQL database.
+2. Mount the named volume to the appropriate database directory.
+3. Configure a bind mount for application configuration files.
+4. Insert sample records into the database.
+5. Stop and remove the database container.
+6. Recreate the database container and verify that the records are still available.
+7. Take a database backup and demonstrate the restore process.
+
+**Challenge:** Demonstrate data recovery after deleting and recreating a container.
+
+########## Task 5: Implement Docker Compose ##############
+
+1. Create a `docker-compose.yml` file to manage the frontend, backend, and database.
+2. Configure each service to use its respective Dockerfile.
+3. Configure custom networks.
+4. Configure named volumes and bind mounts.
+5. Use environment variables through a `.env` file.
+6. Configure service dependencies using `depends_on`.
+7. Implement health checks for the database and backend.
+8. Configure restart policies.
+9. Configure port mappings wherever required.
+
+**Challenge:** Start and stop the complete application using Docker Compose commands without manually managing individual containers.
+
+## Task 6: Image Management and Registry Integration
+
+1. Build Docker images for frontend and backend.
+2. Tag images using appropriate version numbers.
+3. Push images to Docker Hub or Nexus Repository.
+4. Pull the images from the registry on another machine.
+5. Run the application using the pulled images.
+
+**Challenge:** Implement version-based image tagging such as `v1`, `v2`, and `latest`.
+
+## Task 7: Container Security and Optimization
+
+1. Run application containers using non-root users wherever possible.
+2. Create a `.dockerignore` file.
+3. Avoid hardcoding credentials in Dockerfiles.
+4. Use environment variables or Docker secrets for sensitive configuration.
+5. Configure CPU and memory limits.
+6. Scan Docker images for vulnerabilities using an image scanning tool.
+7. Analyze and optimize image sizes.
+
+## Task 8: Troubleshooting and Production Scenarios
+
+Demonstrate the following scenarios:
+
+1. Backend cannot connect to the database. Identify and resolve the issue.
+2. Database container is deleted. Recover the application data.
+3. Backend container crashes. Configure and verify automatic restart.
+4. Frontend cannot communicate with the backend. Troubleshoot networking.
+5. A new application version is released. Deploy the new image without rebuilding the database.
+6. Demonstrate rollback to the previous application version if the new version fails.
+
+## Submission Requirements
+
+Students must submit:
+
+1. All Dockerfiles.
+2. `docker-compose.yml`.
+3. `.env.example` without actual credentials.
+4. Application source code.
+5. Docker network and volume configuration.
+6. Image build and registry commands.
+7. Screenshots of successful deployment and testing.
+8. Architecture diagram showing containers, networks, and volumes.
+9. Documentation of troubleshooting scenarios and their solutions.
+
+**Expected Outcome:**
+
+At the end of this assignment, you should be able to design, build, deploy, manage, troubleshoot, and optimize a multi-tier application using advanced Docker concepts.
+
+--------------------------------------------------------------------------------
+############ 30 oct ###############
+kubernetes
+
+# Assignment: Deploy an Application on AKS Using Terraform, ACR, and Blue-Green Deployment
+
+**Objective:** Provision an Azure Kubernetes Service (AKS) cluster using Terraform, deploy a containerized application from Azure Container Registry (ACR), and implement a Blue-Green Deployment strategy to release a new application version.
+
+### Task 1: Provision the AKS Cluster Using Terraform
+- Write Terraform configuration files to provision an AKS cluster in Azure.
+- Configure the cluster with a minimum of **2 worker nodes**.
+- Initialize Terraform and execute the `plan` and `apply` commands.
+- Verify that the AKS cluster is successfully created and accessible.
+
+### Task 2: Build and Push the Application Image to ACR
+- Create a custom Docker image for your application.
+- You can either build a new application image or reuse the image created in the previous Docker assignment.
+- Create an Azure Container Registry (ACR), if one does not already exist.
+- Tag your Docker image appropriately and push it to ACR.
+- Verify that the image is available in your ACR repository.
+
+### Task 3: Deploy the Application on AKS
+- Connect to your AKS cluster using `kubectl`.
+- Create Kubernetes manifest files to deploy your application using the image stored in ACR.
+- Configure the required Kubernetes resources, such as:
+  - Deployment
+  - Service
+- Apply the manifest files and verify that the application is deployed successfully.
+- Check the Pod status, Service configuration, and application accessibility.
+
+### Task 4: Implement Blue-Green Deployment for Application V2
+- Make changes to your application code and create a new version (**V2**).
+- Build a new Docker image with an updated version tag.
+- Push the V2 image to ACR.
+- Implement a **Blue-Green Deployment strategy** on AKS:
+  - **Blue:** Existing application version (V1).
+  - **Green:** New application version (V2).
+- Deploy V2 alongside V1 without interrupting the existing application.
+- Verify that V2 is working correctly.
+- Switch the Kubernetes Service traffic from V1 (Blue) to V2 (Green).
+- Validate that users are accessing V2 successfully.
+- Ensure you understand how to roll back to V1 if any issues occur.
+
+### Expected Outcome
+By completing this assignment, you should be able to:
+1. Provision an AKS cluster using Terraform.
+2. Build, tag, and push Docker images to Azure Container Registry.
+3. Deploy containerized applications on AKS using Kubernetes manifest files.
+4. Implement Blue-Green Deployment to release application updates with minimal downtime.
+5. Switch traffic between application versions and perform a rollback when required.
+
+**Submission Requirements:**
+- Terraform configuration files.
+- Dockerfile and application source code.
+- Kubernetes manifest files.
+- Screenshots of the AKS cluster, ACR repository, and running Pods.
+- Evidence of successful Blue-Green deployment, traffic switching, and rollback.
+
+------------------------------------------------------------------
+############### 5th november #############
+sonar qube and nexus
+# Assignment: Design and Implement an Enterprise DevSecOps Pipeline Using SonarQube and Nexus
+
+## Business Scenario
+
+You are working as a DevOps Engineer in a fintech organization developing a Java-based payment application.
+
+The organization wants to implement a secure CI/CD pipeline where every code change is analyzed for quality and security before it is released.
+
+The organization has the following requirements:
+
+- SonarQube must analyze source code quality and security.
+- Nexus Repository must manage application artifacts and Docker images.
+- Vulnerable dependencies must be identified before publishing artifacts.
+- Only applications passing the defined Quality Gate should be published to Nexus.
+- Different artifact versions must be maintained for development and production.
+- The entire process must be automated using GitHub Actions or Jenkins.
+
+## Task 1: SonarQube Advanced Configuration
+
+1. Deploy SonarQube on an Ubuntu VM or using Docker.
+2. Integrate SonarQube with your GitHub repository.
+3. Configure a project with a unique project key.
+4. Generate and configure SonarQube authentication tokens securely.
+5. Configure a Quality Gate with the following conditions:
+   - New code coverage should be at least 80%.
+   - No new Blocker or Critical issues.
+   - No new security vulnerabilities.
+   - No new security hotspots left unreviewed.
+6. Configure Quality Profiles for Java.
+7. Configure branch analysis for main and feature branches.
+8. Configure Pull Request analysis.
+9. Integrate SonarQube Quality Gate with your CI/CD pipeline.
+10. Demonstrate how the pipeline behaves when the Quality Gate fails.
+
+**Expected outcome:** The pipeline should stop artifact publishing if the Quality Gate fails.
+
+## Task 2: Nexus Repository Advanced Configuration
+
+1. Deploy Nexus Repository Community Edition.
+2. Configure the following repositories:
+
+   - maven-releases (Hosted)
+   - maven-snapshots (Hosted)
+   - maven-central (Proxy)
+   - maven-public (Group)
+   - docker-hosted (Hosted)
+
+3. Create separate users for developers and deployment pipelines.
+4. Configure role-based access control.
+5. Configure Maven settings.xml.
+6. Configure pom.xml with distributionManagement.
+7. Upload JAR artifacts to Nexus.
+8. Configure release and snapshot artifact publishing.
+9. Configure Docker repository authentication and connector.
+10. Push and pull Docker images from Nexus.
+
+**Expected outcome:** Nexus should act as the centralized artifact repository for the organization.
+
+## Task 3: Implement Vulnerability Scanning
+
+Integrate vulnerability scanning into your CI/CD pipeline.
+
+Requirements:
+
+1. Integrate OWASP Dependency-Check with Maven.
+2. Identify vulnerable third-party dependencies.
+3. Generate an HTML vulnerability report.
+4. Configure the pipeline to fail if a dependency has a CVSS score of 7 or higher.
+5. Generate a Software Bill of Materials (SBOM).
+6. Scan the generated Docker image using Trivy.
+7. Publish security reports as GitHub Actions workflow artifacts.
+8. Ensure vulnerable artifacts are not published to Nexus.
+
+**Expected outcome:** No artifact should be published when it violates the defined security policy.
+
+Note: SonarQube code analysis and dependency/container vulnerability scanning are separate security controls. Use the appropriate scanner for each.
+
+## Task 4: Build an End-to-End CI/CD Pipeline
+
+Implement the complete workflow using GitHub Actions or Jenkins.
+
+Pipeline stages:
+
+1. Checkout source code.
+2. Compile the Java application.
+3. Execute unit tests.
+4. Perform SonarQube analysis.
+5. Wait for SonarQube Quality Gate result.
+6. Perform dependency vulnerability scanning.
+7. Generate SBOM.
+8. Build the JAR package.
+9. Publish approved JAR to Nexus.
+10. Build Docker image.
+11. Scan Docker image using Trivy.
+12. Push approved Docker image to Nexus.
+13. Generate and publish pipeline reports.
+
+**Important condition:** The pipeline must not publish artifacts if any mandatory quality or security gate fails.
+
+## Task 5: Implement Artifact Version Management
+
+Create a version management strategy.
+
+Requirements:
+
+1. Publish development builds as snapshot versions.
+2. Publish production builds as release versions.
+3. Maintain unique versions for every production release.
+4. Prevent accidental overwriting of released artifacts.
+5. Maintain traceability between Git commit, JAR version and Docker image tag.
+6. Demonstrate downloading an older artifact from Nexus.
+7. Demonstrate rollback to a previous application version.
+
+Example:
+
+- Development: 1.0.1-SNAPSHOT
+- Release: 1.0.0
+- Release: 1.0.1
+- Release: 1.1.0
+
+## Task 6: Implement Branch-Based Pipeline Strategy
+
+Configure the pipeline for the following branches:
+
+**Feature branch**
+- Build and test.
+- Run SonarQube analysis.
+- Perform dependency scanning.
+- Do not publish production release artifacts.
+
+**Main branch**
+- Execute all quality and security checks.
+- Publish approved release artifacts.
+- Build and publish Docker images.
+
+**Pull Request**
+- Execute code quality checks.
+- Perform security analysis.
+- Prevent merging when mandatory checks fail.
+
+## Task 7: Advanced Troubleshooting Scenarios
+
+Demonstrate how you would troubleshoot the following scenarios:
+
+1. SonarQube analysis succeeds, but the Quality Gate fails.
+2. SonarQube scanner cannot connect to the SonarQube server.
+3. Maven cannot download dependencies through the Nexus proxy repository.
+4. Jenkins/GitHub Actions receives HTTP 401 while uploading artifacts to Nexus.
+5. Nexus returns HTTP 403 during artifact deployment.
+6. Two builds attempt to publish the same release version.
+7. Nexus disk usage reaches 90%.
+8. A vulnerable dependency is identified after an artifact has already been published.
+9. Docker image push to Nexus fails due to authentication or TLS configuration.
+10. SonarQube analysis reports different results between local and CI environments.
+
+For each scenario, provide:
+- Root cause.
+- Diagnostic commands or logs.
+- Resolution steps.
+- Preventive measures.
+
+## Final Deliverables
+
+Submit the following:
+
+1. Architecture diagram.
+2. GitHub repository containing application source code.
+3. SonarQube project and Quality Gate configuration screenshots.
+4. Nexus repository configuration screenshots.
+5. Complete GitHub Actions workflow or Jenkinsfile.
+6. Maven pom.xml and settings.xml.
+7. Dependency vulnerability report.
+8. Docker image vulnerability report.
+9. SBOM file.
+10. Proof of successful artifact publishing.
+11. Screenshots of failed and successful pipeline executions.
+12. Technical documentation explaining the implementation.
+
+## Evaluation Criteria
+
+| Area | Marks |
+|---|---:|
+| SonarQube configuration | 15 |
+| Nexus configuration | 15 |
+| Vulnerability scanning | 15 |
+| CI/CD pipeline automation | 20 |
+| Artifact version management | 10 |
+| Branch-based pipeline strategy | 10 |
+| Troubleshooting | 10 |
+| Documentation and architecture | 5 |
+| **Total** | **100** |
+
+## Final Challenge
+
+Demonstrate the following scenario:
+
+A developer introduces code containing a security vulnerability and updates a vulnerable third-party dependency.
+
+Your pipeline must:
+
+1. Detect the code issue through SonarQube.
+2. Detect the vulnerable dependency through Dependency-Check.
+3. Fail the pipeline.
+4. Prevent artifact publishing to Nexus.
+5. Generate reports identifying the problems.
+
+After fixing the issues, the developer pushes the updated code.
+
+The pipeline should pass all mandatory quality and security checks, publish the JAR to Nexus, build and scan the Docker image, and publish the approved image to Nexus.
+
+**The objective is to demonstrate a complete automated DevSecOps implementation, not just individual tool configurations.**
+
+--------------------------------------------------------
+06 november
+xl deploy
+# Assignment: XL Deploy and Azure App Service
+
+**Objective:** Implement application deployment on Azure App Service using XL Deploy and understand how deployment automation works in a real-time project environment.
+
+### Task 1: Deploy an Application on Azure App Service using XL Deploy
+
+1. Create a sample Java web application and build it using Maven.
+2. Generate the WAR file and prepare it for deployment.
+3. Create an Azure App Service.
+4. Configure the required deployment target in XL Deploy.
+5. Import the application package into XL Deploy.
+6. Deploy the application to Azure App Service.
+7. Verify whether the application is accessible through its Azure URL.
+8. Make a small change in the application, generate a new version, and deploy it again.
+
+**Note:** Maintain both application versions and check the deployment history in XL Deploy.
+
+### Task 2: Configure Multiple Environments
+
+Assume you are working on a project where the application needs to be deployed in three different environments: Dev, QA, and Production.
+
+1. Create three separate Azure App Services.
+2. Configure all three environments in XL Deploy.
+3. Deploy the same application package to all three environments.
+4. Configure different application settings for each environment.
+5. Use XL Deploy Dictionaries to manage environment-specific values.
+6. Verify that the application is running correctly in all three environments.
+
+**Condition:** You should not create separate application packages for Dev, QA, and Production. Use the same package and manage the configuration through XL Deploy.
+
+### Task 3: Implement Blue-Green Deployment
+
+1. Create an Azure App Service and deploy the first version of your application.
+2. Create a staging deployment slot.
+3. Make some changes to the application and prepare a second version.
+4. Use XL Deploy to deploy the second version to the staging slot.
+5. Test the application in the staging environment.
+6. Once everything is working fine, perform a slot swap between Staging and Production.
+7. Verify that the new version is accessible through the production URL.
+8. Demonstrate how you can switch back to the previous version if the new release has issues.
+
+### Task 4: Application Rollback
+
+1. Deploy Version 1 of your application using XL Deploy.
+2. Make some changes and deploy Version 2.
+3. Introduce a configuration issue in Version 2 and simulate an application failure.
+4. Identify the previous successful deployment from XL Deploy.
+5. Roll back the application to Version 1.
+6. Verify that the previous version is working correctly.
+7. Capture the deployment history and rollback logs.
+
+**Condition:** Explain how you would handle this situation in a production environment without impacting application users.
+
+### Task 5: Integrate GitHub Actions with XL Deploy
+
+1. Create a private repository on GitHub and upload your Java application.
+2. Create a GitHub Actions workflow to build the application using Maven.
+3. Generate the WAR file as a build artifact.
+4. Configure the workflow to pass the generated artifact to XL Deploy.
+5. Automate deployment to the Dev environment.
+6. Configure a manual approval step before deploying to Production.
+7. Verify the application after deployment on Azure App Service.
+8. Check the deployment logs and maintain the release version.
+
+**Condition:** The application should be deployed automatically whenever changes are pushed to the main branch. Production deployment should happen only after approval.
+
+---
+
+### Submission Instructions
+
+- Submit the GitHub repository link.
+- Share the XL Deploy configuration screenshots.
+- Share the Azure App Service details.
+- Provide screenshots of successful application deployment.
+- Share the deployment and rollback logs.
+- Explain the complete deployment process briefly.
+
+**Important:** All tasks should be performed practically. Do not submit only theoretical explanations or screenshots of the Azure Portal.
+
+----------------------- 13th november ---------------
+
+# ELK Stack – Practical Assignments
+
+## Assignment 1: Centralized Application Logging on AKS
+
+**Scenario:**  
+You are managing an application deployed on AKS that consists of a frontend, backend, and database. You need to implement centralized logging to monitor all application components.
+
+**Tasks:**
+1. Deploy a sample application with at least two microservices on AKS.
+2. Configure Filebeat or Elastic Agent to collect application logs.
+3. Send the logs to Elasticsearch.
+4. Configure Kibana data views to visualize logs.
+5. Create a dashboard showing application errors, warnings, and successful requests.
+
+**Expected Deliverables:**
+- Deployment YAML files.
+- Log collection configuration.
+- Kibana dashboard screenshots.
+- Explanation of the log flow.
+
+## Assignment 2: Application Error Detection and Troubleshooting
+
+**Scenario:**  
+Your production application is experiencing intermittent failures. The development team needs to identify the root cause using ELK.
+
+**Tasks:**
+1. Generate application logs containing successful requests, HTTP 500 errors, database timeouts, and failed authentication attempts.
+2. Use Logstash filters or Elasticsearch ingest pipelines to parse and structure the logs.
+3. Create Kibana visualizations to identify error patterns.
+4. Identify the service generating the maximum number of errors.
+5. Investigate the possible root cause using timestamps and request IDs.
+
+**Expected Deliverables:**
+- Logstash or ingest pipeline configuration.
+- Structured log samples.
+- Kibana error dashboard.
+- Root cause analysis.
+
+## Assignment 3: Kubernetes Monitoring and Alerting
+
+**Scenario:**  
+Your AKS cluster is running multiple applications. You need to monitor resource utilization and receive alerts when services experience problems.
+
+**Tasks:**
+1. Configure Metricbeat or Elastic Agent to collect Kubernetes node and pod metrics.
+2. Monitor CPU, memory, pod restarts, and node health.
+3. Create Kibana dashboards for cluster monitoring.
+4. Configure alerts for:
+   - CPU utilization above 85%.
+   - Memory utilization above 90%.
+   - Frequent pod restarts.
+   - Application error rate above a defined threshold.
+5. Simulate a failure and verify whether the alert is triggered.
+
+**Expected Deliverables:**
+- Metric collection configuration.
+- Kubernetes monitoring dashboard.
+- Alert configuration.
+- Screenshots of the simulated incident and alert.
+
+## Assignment 4: Elasticsearch High Availability and Log Retention
+
+**Scenario:**  
+Your organization uses Elasticsearch to store production logs. You need to ensure availability and optimize storage costs.
+
+**Tasks:**
+1. Configure Elasticsearch with multiple nodes and appropriate shard and replica settings.
+2. Verify cluster health and shard allocation.
+3. Simulate an Elasticsearch pod failure and observe recovery.
+4. Configure Index Lifecycle Management (ILM) for log retention.
+5. Implement rollover and automatic deletion of old logs.
+6. Investigate what happens when a node or persistent volume becomes unavailable.
+
+**Expected Deliverables:**
+- Elasticsearch configuration.
+- Cluster health and shard status.
+- ILM policy configuration.
+- Failure simulation results.
+- Storage optimization explanation.
+
+## Assignment 5: End-to-End Production Logging and Security Monitoring
+
+**Scenario:**  
+You are responsible for implementing centralized logging and security monitoring for a production application running on AKS.
+
+**Tasks:**
+1. Collect logs from application containers and relevant Kubernetes components.
+2. Collect authorized Linux authentication and security logs.
+3. Configure Logstash to parse, filter, and enrich log data.
+4. Create Kibana dashboards for application health and security events.
+5. Detect repeated failed login attempts and suspicious access patterns.
+6. Configure alerts for critical application errors and security events.
+7. Document the complete architecture and data flow.
+
+**Expected Deliverables:**
+- End-to-end ELK architecture diagram.
+- Filebeat/Elastic Agent and Logstash configurations.
+- Kibana dashboards.
+- Security alerts.
+- Implementation and troubleshooting documentation.
+
+---
+
+## Submission Guidelines
+
+For each assignment, submit:
+
+1. Architecture diagram.
+2. Configuration files and YAML manifests.
+3. Screenshots of successful implementation.
+4. Testing and troubleshooting steps.
+5. Explanation of the solution and observations.
+
+**Evaluation Criteria (100 Marks)**
+
+| Criteria | Marks |
+|---|---:|
+| Architecture and implementation | 20 |
+| Log collection and processing | 20 |
+| Elasticsearch configuration | 15 |
+| Kibana dashboards and visualizations | 15 |
+| Monitoring and alerting | 15 |
+| Troubleshooting and documentation | 15 |
+| **Total** | **100** |
